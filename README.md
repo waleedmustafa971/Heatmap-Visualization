@@ -107,9 +107,12 @@ Other data feeds from USGS can be used depending on the desired timeframe:
 * Past 30 Days: https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson
 
 # How to Run
+
+<img width="939" alt="image" src="https://github.com/user-attachments/assets/f0cd80dc-ac04-4871-aeae-950cb6747782">
+
 1- Clone the repository:
 
-git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/waleedmustafa971/Heatmap-Visualization.git
 
 2- Open the index.html file in your browser. You can use an HTTP server like the Live Server extension for VSCode to avoid cross-origin issues when fetching the data.
 
