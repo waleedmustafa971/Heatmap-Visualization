@@ -10,64 +10,59 @@ Features:
 
 # Code Breakdown
 HTML Structure:
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Heatmap with Leaflet</title>
-  <!-- Include Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <style>
-    #map {
-      height: 100vh;
-      width: 100%;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heatmap with Leaflet</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+    </style>
 </head>
+
 <body>
-  <div id="map"></div>
+    <div id="map"></div>
 
-  <!-- Include Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <!-- Include Leaflet.heat plugin -->
-  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-  
-  <!-- Add the script that generates the map and heatmap below -->
-  <script>
-    // Initialize map centered on latitude 20.0, longitude 5.0, with zoom level 2
-    const map = L.map('map').setView([20.0, 5.0], 2);
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
 
-    // Add OpenStreetMap tile layer to the map
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    <script>
+        const map = L.map('map').setView([20.0, 5.0], 2);
 
-    // URL for USGS Earthquake data (all magnitudes in the past 24 hours)
-    const url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson';
-
-    // Fetch earthquake data and add it to the heatmap layer
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        // Convert GeoJSON features into a format suitable for the heatmap
-        const earthquakes = data.features.map(feature => {
-          const coords = feature.geometry.coordinates;
-          const magnitude = feature.properties.mag;
-          return [coords[1], coords[0], magnitude / 10]; // Normalize magnitude
-        });
-
-        // Add heatmap layer to the map with customizable options
-        L.heatLayer(earthquakes, {
-          radius: 35,  // Increase to make each heatpoint larger
-          blur: 20,    // Smoothing effect on each heatpoint
-          maxZoom: 15  // Maximum zoom level to show the heatmap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
-      })
-      .catch(error => console.error('Error fetching earthquake data:', error));
-  </script>
+
+        const url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson';
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const earthquakes = data.features.map(feature => {
+                    const coords = feature.geometry.coordinates;
+                    const magnitude = feature.properties.mag;
+                    return [coords[1], coords[0], magnitude / 10];
+                });
+
+                L.heatLayer(earthquakes, {
+                    radius: 35,
+                    blur: 20,
+                    maxZoom: 15
+                }).addTo(map);
+            })
+            .catch(error => console.error('Error fetching earthquake data:', error));
+    </script>
 </body>
+
 </html>
+  ```
 
 # JavaScript Breakdown:
 !- Map Initialization:
